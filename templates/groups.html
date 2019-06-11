@@ -25,14 +25,11 @@
 
         <div style="width:100%; height:600px; overflow:auto;">
 
-            {% for a, b, c in groups %}
-
             {% for group_idx, title, subtitle in groups %}
                 <a href="/groupMembers/{{ group_idx }}" input class="btn btn-primary btn-block" >{{ title }} . {{ subtitle }}</a>
                 <br />
             {% endfor %}
 
-            {% endfor %}
 
         </div>
 
