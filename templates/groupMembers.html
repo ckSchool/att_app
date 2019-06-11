@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+    {% block title %}Group Members{% endblock %}
+
+    {% block extra_css %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='card.css') }}">
+    {% endblock %}
+
+    {% block content %}
+        <a href="/groupDetails/{{ group_id }}" input class="btn btn-primary btn-block" >{{ group_name }}</a>
+        <h1 class="andrew">Andrews Header</h1>
+        <br>
+        <div style="width:100%;  overflow:auto;">
+            <!--height:550px;-->
+            <!--<form action="/groupMembers/{{ group_id }}" method="post">-->
+            <input type="submit">
+            {% for member_id, member_name, f_att, g_att in members %}
+
+
+                <!--<div>-->
+                    <!--<tr>-->
+                        <!--<td rowspan="3">-->
+                            <!--<img class="w-25" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Je4kxXA89B0AQTHxuSdVL2MHf2VU0ThGvkXYoaa2uzvCowMIMQ" alt="">-->
+                        <!--</td>-->
+                        <!--<td>{{ member_id }}</td>-->
+                        <!--<td>{{ member_name }}</td>-->
+                        <!--<td><input type="checkbox" name="{{ member_name }}"></td>-->
+                          <!--<input type="radio" name="gender" value="a" checked>A-->
+                          <!--<input type="radio" name="gender" value="s"> S-->
+                          <!--<input type="radio" name="gender" value="t"> T-->
+                          <!--<input type="radio" name="gender" value="p"> P-->
+                          <!--<input type="radio" name="gender" value="i"> I-->
+                        <!--<td><a href="#" class="btn btn-primary btn-sm float-right">Read More</a></td>-->
+                      <!--</tr>-->
+
+                <!--</div>-->
+                <br>
+
+                <div class="card mb-3 card-horizontal" style="max-width: 540px;">
+                  <div class="row no-gutters">
+                    <div class="col-md-3">
+                      <img class="w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Je4kxXA89B0AQTHxuSdVL2MHf2VU0ThGvkXYoaa2uzvCowMIMQ" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-7">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ member_name }}</h5>
+                        <p class="card-text">{{ member_id }}</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small><a href="#" class="btn btn-primary btn-sm float-right">Read More</a>  </p>
+                      </div>
+                    </div>
+                      <div class="col-md-2">
+                      <div class="card-body">
+                        <p class="card-text">
+                            <input type="checkbox" name="{{ member_name }}" style="width: 30px; height: 30px;"></td>
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            {% endfor %}
+            <!--</form>-->
+        </div>
+    {% endblock %}

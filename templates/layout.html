@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+      <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <script src="main.js"></script>
+
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+      {% block extra_css %}
+      {% endblock %}
+  </head>
+  <body>
+    <div id="content">{% block content %}No block content defined{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>.
+      {% endblock %}
+    </div>
+  </body>
+</html>

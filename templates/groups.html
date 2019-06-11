@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title><Page Title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+        <script src="main.js"></script>
+
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+
+
+    <body>
+        <h4>{{ user }}</h4>
+
+        <div style="width:100%; height:600px; overflow:auto;">
+
+            {% for a, b, c in groups %}
+
+            {% for group_idx, title, subtitle in groups %}
+                <a href="/groupMembers/{{ group_idx }}" input class="btn btn-primary btn-block" >{{ title }} . {{ subtitle }}</a>
+                <br />
+            {% endfor %}
+
+            {% endfor %}
+
+        </div>
+
+    </body>
+</html>
