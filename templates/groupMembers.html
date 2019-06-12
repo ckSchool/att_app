@@ -6,57 +6,58 @@
     {% endblock %}
 
     {% block content %}
-        <a href="/groupDetails/{{ group_id }}" input class="btn btn-primary btn-block" >{{ group_name }}</a>
-        <h1 class="andrew">Andrews Header</h1>
+
+      <table style="width:100%">
+        <tr>          
+          <th><a href="#" class="btn  btn-block">Back</a></th> 
+          <th><a href="/groupDetails/{{ group_id }}" input class="btn btn-primary" >{{ group_name }}</a></th>
+        </tr>
+        <tr>
+            <th><h2 class="card-title">Last updated 3 mins ago</h2></th>
+            <th>
+              <table style="width:100%">
+                <!-- <th><a href="#" class="btn  btn-block">All</a></th> -->
+                <th><a href="#" class="btn  btn-block">Submit</a>
+                <th><input type="checkbox" name="All" style="width: 30px; height: 30px;"></td></th>
+              </table>
+            </th>
+                
+           
+        </tr>
+      </table>
+
+         
+        
         <br>
         <div style="width:100%;  overflow:auto;">
             <!--height:550px;-->
             <!--<form action="/groupMembers/{{ group_id }}" method="post">-->
-            <input type="submit">
+  
             {% for member_id, member_name, f_att, g_att, img_url in members %}
-
-
-                <!--<div>-->
-                    <!--<tr>-->
-                        <!--<td rowspan="3">-->
-                            <!--<img class="w-25" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Je4kxXA89B0AQTHxuSdVL2MHf2VU0ThGvkXYoaa2uzvCowMIMQ" alt="">-->
-                        <!--</td>-->
-                        <!--<td>{{ member_id }}</td>-->
-                        <!--<td>{{ member_name }}</td>-->
-                        <!--<td><input type="checkbox" name="{{ member_name }}"></td>-->
-                          <!--<input type="radio" name="gender" value="a" checked>A-->
-                          <!--<input type="radio" name="gender" value="s"> S-->
-                          <!--<input type="radio" name="gender" value="t"> T-->
-                          <!--<input type="radio" name="gender" value="p"> P-->
-                          <!--<input type="radio" name="gender" value="i"> I-->
-                        <!--<td><a href="#" class="btn btn-primary btn-sm float-right">Read More</a></td>-->
-                      <!--</tr>-->
-
-                <!--</div>-->
-                <br>
-
-                <div class="card mb-3 card-horizontal" style="max-width: 540px;">
+                <div class="card mb-1 card-horizontal" style="width: 100%;">
                   <div class="row no-gutters">
                     <div class="col-md-3">
                       <img class="w-100" src="{{ img_url }}" class="card-img" alt="...">
                     </div>
+
                     <div class="col-md-7">
                       <div class="card-body">
-                        <h5 class="card-title">{{ member_name }}</h5>
-                        <p class="card-text">{{ member_id }}</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small><a href="#" class="btn btn-primary btn-sm float-right">Read More</a>  </p>
+                        <h1 class="card-title">{{ member_id }}</h5>
+                        <a href="/memberDetails/{{ member_id }}" class="btn btn-block ">{{ member_name  }}</a> 
+                
                       </div>
                     </div>
                       <div class="col-md-2">
-                      <div class="card-body">
+                      <!-- <div class="card-body"> -->
                         <p class="card-text">
-                            <input type="checkbox" name="{{ member_name }}" style="width: 30px; height: 30px;"></td>
+                            <input type="checkbox"  style="width: 30px; height: 30px;"></td>
                         </p>
 
-                      </div>
+                      <!-- </div> -->
                     </div>
                   </div>
                 </div>
+                <br>
 
             {% endfor %}
             <!--</form>-->
