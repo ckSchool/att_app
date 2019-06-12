@@ -13,7 +13,7 @@
             <!--height:550px;-->
             <!--<form action="/groupMembers/{{ group_id }}" method="post">-->
             <input type="submit">
-            {% for member_id, member_name, f_att, g_att in members %}
+            {% for member_id, member_name, f_att, g_att, img_url in members %}
 
 
                 <!--<div>-->
@@ -38,7 +38,7 @@
                 <div class="card mb-3 card-horizontal" style="max-width: 540px;">
                   <div class="row no-gutters">
                     <div class="col-md-3">
-                      <img class="w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Je4kxXA89B0AQTHxuSdVL2MHf2VU0ThGvkXYoaa2uzvCowMIMQ" class="card-img" alt="...">
+                      <img class="w-100" src="{{ img_url }}" class="card-img" alt="...">
                     </div>
                     <div class="col-md-7">
                       <div class="card-body">
