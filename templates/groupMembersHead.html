@@ -22,14 +22,11 @@
             <td><h2 class="card-title">Last updated 3 mins ago</h2></td>
             <td>
               <table style="width:100%">
-                <!-- <th><a href="#" class="btn  btn-block">All</a></th> -->
                 <td><a href="#" class="btn  btn-block">Submit</a></td>
                 <td><input type="checkbox" name="All" style="width: 30px; height: 30px; float: right">All/None<br></td>
 
               </table>
             </th>
-                
-           
         </tr>
       </table>
 
@@ -37,32 +34,30 @@
         
         <br>
         <div style="width:100%;  overflow:auto;">
-            <!--height:550px;-->
-            <!--<form action="/groupMembers/{{ group_id }}" method="post">-->
   
             {% for member_id, member_name, f_att, g_att, img_url in members %}
                 <div class="card mb-1 card-horizontal" style="width: 100%;">
                   <div class="row no-gutters">
-                    <div class="col-md-3">
-                      <img class="w-100" src="{{ img_url }}" class="card-img" alt="...">
+                    <div class="col-md-2">
+                      <img class="w-100" src="{{ img_url }}" width="80px" height="150px class="card-img" alt="...">
                     </div>
 
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                       <div class="card-body">
-                        <h1 class="card-title">{{ member_id }}</h5>
-                        <a href="/memberDetails/{{ member_id }}" class="btn btn-block ">{{ member_name  }}</a> 
-                
+                        <h1 class="card-text">{{ member_id }}</h5>
+                        <a href="/memberDetails/{{ member_id }}" class="btn btn-block " style="font-size: larger; width: 100%">{{ member_name  }}</a> 
                       </div>
                     </div>
-                      <div class="col-md-2">
-                      <!-- <div class="card-body"> -->
-                        <p class="card-text">
-                            <input type="checkbox"  style="width: 30px; height: 30px;"></td>
-                        </p>
+                    <div class="col-md-1">
+                      <p class="card-body">
+                        <br>
+                        <br>
+                        <input type="checkbox"  style="width: 30px; height: 30px;"></td>
+                      </p>
 
-                      <!-- </div> -->
                     </div>
                   </div>
+
                 </div>
                 <br>
 

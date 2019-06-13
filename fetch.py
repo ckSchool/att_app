@@ -526,7 +526,7 @@ def get_members_for_group(groupData, date):
 
     sch_div = groupData['sch_div']
     kelas_id = groupData['kelas_id']
-    pelajaran_id = groupData['pelajaran_id']
+    subject_id = groupData['pelajaran_id']
     group_name = 'group_name'
     group_type = groupData['group_type']
     joined_classes = groupData['joined_classes']
@@ -539,19 +539,19 @@ def get_members_for_group(groupData, date):
     print('group_type',group_type)
 
     if group_type == 'moving':
-        att_data = _moving_att(sch_yr, date, sch_div, group_id, subject_id)
+        att_data = _moving_att(sch_yr, date, sch_div, kelas_id, subject_id)
 
     elif group_type == 'lesson':
 
-        print('get members for l:', sch_yr, date, sch_div, pelajaran_id, kelas_id)
+        print('get members for l:', sch_yr, date, sch_div, subject_id, kelas_id)
 
-        att_data = _lesson_att(sch_yr, date, sch_div, pelajaran_id, kelas_id)
+        att_data = _lesson_att(sch_yr, date, sch_div, subject_id, kelas_id)
 
 
     elif group_type == 'excur':
         att_data = _excur_att(sch_yr, date, sch_div, kelas_id)
 
-    elif group_type == 'formclass' or _type == 'own':
+    elif group_type == 'formclass' or group_type == 'own':
         att_data = _form_att(sch_yr, date,  sch_div, kelas_id)
 
 
@@ -572,7 +572,10 @@ def get_members_for_group(groupData, date):
         f_att = member['f_att']
         g_att = member['g_att']
 
-        member_list.append((member_id, member_name, f_att, g_att))
+        img_path = "http://192.168.0.254/smsicons"
+        img_url = "%s/%s/%s.jpg" % (img_path, sch_div, member_id)
+
+        member_list.append((member_id, member_name, f_att, g_att, img_url))
 
     return member_list
 
