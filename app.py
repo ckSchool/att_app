@@ -46,17 +46,22 @@ def groupMembers(group_id):
     print('selected group_id', group_id)
 
     selected_group = all_my_groups[group_id]
-    print('selected_group:',selected_group)
+    print('selected_group:', selected_group)
 
     background_colour = selected_group['background_colour']
     date = '2018-11-22'
     members = fetch.get_members_for_group(selected_group, date)
+    group_type = selected_group['group_type']
 
     last_att_today = ()
     group_name = selected_group['group_name']
     # ({f_att}}{{g_att}}
-    return render_template('groupMembers.html', members=members, last_att_today=last_att_today, group_id=group_id, group_name=group_name, background_colour=background_colour)
+    if group_type =='lesson':
+        return render_template('groupMembersHead.html', members=members, last_att_today=last_att_today, group_id=group_id, group_name=group_name, background_colour=background_colour)
 
+    else:
+        return render_template('groupMembers.html', members=members, last_att_today=last_att_today, group_id=group_id, group_name=group_name, background_colour=background_colour)
+ 
 # @app.route('/groupMembers/<int:group_id>', methods=['POST'])
 #
 # # your code
