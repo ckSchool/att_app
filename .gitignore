@@ -116,3 +116,4 @@ dmypy.json
 .gitattributes
 nohup.out
 secret.py
+.vscode/settings.json
