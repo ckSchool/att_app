@@ -56,7 +56,8 @@ def groupMembers(group_id):
     last_att_today = ()
     group_name = selected_group['group_name']
     # ({f_att}}{{g_att}}
-    if group_type =='lesson':
+
+    if group_type =='formclass':
         return render_template('groupMembersHead.html', members=members, last_att_today=last_att_today, group_id=group_id, group_name=group_name, background_colour=background_colour)
 
     else:
