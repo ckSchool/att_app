@@ -3,21 +3,25 @@
 
     {% block extra_css %}
       <link rel="stylesheet" href="{{ url_for('static', filename='card.css') }}">
+
     {% endblock %}
 
     {% block content %}
-
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <table style="width:100%">
+        <!-- Return button and date indicator (future:selector) -->
         <tr>          
-            <td><a href="#" class="btn  btn-block">Back</a></td> 
+            <td><a href="#" input class="btn btn-block">Back</a></td> 
             <td><h2 class="card-title">Todays date 12 June 2019</h2></td>
-          </tr>
-
-        
-        <tr>          
-            <td colspan="2"> <a href="/groupDetails/{{ group_id }}" input class="btn btn-block" style="width: 100%" >{{ group_name }}</a></td>
-          </tr>
-
+        </tr>
+        <!-- Group Title -->
+        <tr >      
+          <td colspan="2"> 
+            <a href="/groupDetails/{{ group_id }}" input class="btn btn-primary" 
+            style="font-size:12mm ;background-color: darkblue; width: 100%; height:22mm" >{{ group_name }}</a>
+          </td>
+        </tr>
+        <!-- last submition time for this day LABEL ... All or None CHECKBOX .... Submit BUTTON -->
         <tr>
             <td><h2 class="card-title">Last updated 3 mins ago</h2></td>
             <td>
@@ -25,48 +29,94 @@
                 <!-- <th><a href="#" class="btn  btn-block">All</a></th> -->
                 <td><a href="#" class="btn  btn-block">Submit</a></td>
                 <td><input type="checkbox" name="All" style="width: 30px; height: 30px; float: right">All/None<br></td>
-
               </table>
             </th>
-                
-           
         </tr>
       </table>
 
-         
-        
-        <br>
-        <div style="width:100%;  overflow:auto;">
-            <!--height:550px;-->
-            <!--<form action="/groupMembers/{{ group_id }}" method="post">-->
-  
-            {% for member_id, member_name, f_att, g_att, img_url in members %}
-                <div class="card mb-1 card-horizontal" style="width: 100%;">
-                  <div class="row no-gutters">
-                    <div class="col-md-3">
-                      <img class="w-100" src="{{ img_url }}" class="card-img" alt="...">
-                    </div>
+      <br>
 
-                    <div class="col-md-7">
-                      <div class="card-body">
-                        <h1 class="card-title">{{ member_id }}</h5>
-                        <a href="/memberDetails/{{ member_id }}" class="btn btn-block ">{{ member_name  }}</a> 
-                
-                      </div>
-                    </div>
-                      <div class="col-md-2">
-                      <!-- <div class="card-body"> -->
-                        <p class="card-text">
-                            <input type="checkbox"  style="width: 30px; height: 30px;"></td>
-                        </p>
+      <div style="width:100%;  overflow:auto;">
+        <!--height:550px;-->
+        <!--<form action="/groupMembers/{{ group_id }}" method="post">-->
 
-                      <!-- </div> -->
-                    </div>
-                  </div>
+        {% for member_id, member_name, f_att, g_att, img_url in members %}
+          <!-- <div class="card mb-1 card-horizontal" style="width: 100%;">
+            <div class="row no-gutters">
+              <div class="col-md-3">
+                <img class="w-100" src="{{ img_url }}" width="180px" height="220px" class="card-img" alt="...">
+              </div>
+
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h1 class="card-title">{{ member_id }}</h5>
+                  <a href="/memberDetails/{{ member_id }}" class="btn btn-block" style="width: 100%; height:100%">{{ member_name  }}</a> 
+          
                 </div>
-                <br>
+              </div>
+                <div class="col-md-3" >
 
-            {% endfor %}
-            <!--</form>-->
-        </div>
+                    <a class="btn btn-block"  style="width: 90%; height:100%; border-color: blue ;">
+                      This should be a supersized checkbox</a> 
+              </div>
+            </div>
+          </div> -->
+        
+          <!-- member card -->
+          <table width="100%" style="height: 100%;" cellpadding="10" cellspacing="0" border="1">
+            <tr width="100%">
+              <!-- left side of card - clickable  -->
+              <td width="80%">
+                <a href="/memberDetails/{{ member_id }}">
+                  <!-- left side layout using a table-->
+                  <table width="100%" border="1">
+                    <!-- first column mamber icon -->
+                    <td width="120px">
+                      <img border="0" alt="lost connection" src="{{ img_url }}" width="100%" height="160px">
+                    </td>
+                    <!-- second column - multiple elements - use table to layout -->
+                    <td >
+                      <table width="100%" style="height: 100%;" cellpadding="2" cellspacing="0" border="0">
+                        <!-- top row MEMBER ID    ..... CHECKBOX to indicate morning attendance -->
+                        <tr height="30%" >  
+                          <td width="90%"  style="color: darkblue; padding-left: 20">
+                            <h2> {{ member_id }} g_att = {{g_att}} </h2>
+                          </td>
+
+                          <td width="10%" >
+                            {% if f_att == '-' %} 
+                              <input type="checkbox"  disabled style="width: 30px; height: 30px;">
+                            {% else %} 
+                              <input type="checkbox" checked disabled style="width: 30px; height: 30px;"> -->
+                            {% endif %}
+
+                          </td>
+                        </tr>
+                        <tr width="100%" height="70%" style="font-weight: bolder; font-size:12mm ;color:crimson; padding-left: 20">
+                          <td> {{ member_name  }}</td>
+                        </tr>
+                      </table>
+                    </tr>
+                  </table> 
+                  </a>
+                </td>
+                
+                <!-- right side of card - g_att CHECKBOX -->
+                <td width="19%">
+                  <!-- CHECKED or UNCHECKED depending on g_att -->
+                  {% if g_att == '-' %} 
+                    <input type="checkbox" style="width: 100%; height: 100%;">
+                  {% else %} 
+                    <input type="checkbox" checked  style="width: 100%; height: 100%;">
+                  {% endif %}
+                </td>
+
+            </tr>
+          </table>
+          <br>
+
+
+        {% endfor %}
+        <!--</form>-->
+      </div>
     {% endblock %}
