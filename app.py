@@ -19,12 +19,12 @@ db = ''
 cursor = ''
 connected_to = ''
 user_id = ''
-group_yr_yr = 2018
-groupType_colours = {'excur': (.6, .8, .5, 1),
-                      'formclass': (.9, .8, .7, 1),
-                      'moving': (.7, .8, .9, 1),
-                      'lesson': (.9, .7, .8, 1),
-                      'own': (.7, .9, .8, 1)}
+group_yr = 2018
+# groupType_colours = {'excur': (.6, .8, .5, 1),
+#                       'formclass': (.9, .8, .7, 1),
+#                       'moving': (.7, .8, .9, 1),
+#                       'lesson': (.9, .7, .8, 1),
+#                       'own': (.7, .9, .8, 1)}
 all_my_groups = {}
 groupsList = {}
 fetch.connection()
@@ -37,8 +37,8 @@ def home():
         return render_template('login.html')
 
     else:
-        all_my_groups = fetch.all_groups(user_id, group_yr_yr)
-        groupsList = fetch.groups_list(user_id, group_yr_yr)
+        all_my_groups = fetch.all_groups(user_id, group_yr)
+        groupsList = fetch.groups_list(user_id, group_yr)
         return render_template('groups.html', user=user_id, groups=groupsList)
 
 
@@ -49,7 +49,7 @@ def groupMembers(group_id):
     selected_group = all_my_groups[group_id]
     print('selected_group:', selected_group)
 
-    background_colour = selected_group['background_colour']
+    background_colour = "#"  # selected_group['#']
     date = '2018-11-22'
     members = fetch.get_members_for_group(selected_group, date)
     group_type = selected_group['group_type']
@@ -58,12 +58,12 @@ def groupMembers(group_id):
     group_name = selected_group['group_name']
     # ({f_att}}{{g_att}}
 
-    if group_type =='formclass':
+    if group_type == 'formclass':
         return render_template('groupMembersHead.html', members=members, last_att_today=last_att_today, group_id=group_id, group_name=group_name, background_colour=background_colour)
 
     else:
         return render_template('groupMembers.html', members=members, last_att_today=last_att_today, group_id=group_id, group_name=group_name, background_colour=background_colour)
- 
+
 # @app.route('/groupMembers/<int:group_id>', methods=['POST'])
 #
 # # your code
@@ -72,18 +72,20 @@ def groupMembers(group_id):
 # return
 
 
-
 @app.route('/memberDetails/<member_id>')
 def memberDetails(member_id):
-    return render_template('memberDetails.html', member_id=member_id)#, background_colour=background_colour)
+    # , background_colour=background_colour)
+    return render_template('memberDetails.html', member_id=member_id)
+
 
 @app.route('/groupDetails/<int:group_idx>')
 def groupDetails(group_idx):
-    g=all_my_groups[group_idx]
-    return render_template('groupDetails.html', group=g['title'])#, background_colour=background_colour)
+    g = all_my_groups[group_idx]
+    # , background_colour=background_colour)
+    return render_template('groupDetails.html', group=g['title'])
+
 
 user = {}
-
 
 
 @app.route('/login', methods=['POST'])
