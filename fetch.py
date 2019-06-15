@@ -19,11 +19,6 @@ user_id = ''
 connected = False
 
 sch_yr = 2018
-groupType_colours = {'excur': (.6, .8, .5, 1),
-                      'formclass': (.9, .8, .7, 1),
-                      'moving': (.7, .8, .9, 1),
-                      'lesson': (.9, .7, .8, 1),
-                      'own': (.7, .9, .8, 1)}
 
 
 groupType_colours = { 'excur': "#559bbb",
