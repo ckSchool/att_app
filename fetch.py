@@ -24,10 +24,17 @@ groupType_colours = {'excur': (.6, .8, .5, 1),
                       'moving': (.7, .8, .9, 1),
                       'lesson': (.9, .7, .8, 1),
                       'own': (.7, .9, .8, 1)}
+
+
+groupType_colours = { 'excur': "#559bbb",
+                      'formclass': "#559cec",
+                      'moving': "#46c9cc",
+                      'lesson': "#4b44a3",
+                      'own': "#4b24a3"  }
+
 all_my_groups = {}
 groupsList = {}
 user = {}
-
 
 
 def conn_lan():
@@ -36,6 +43,7 @@ def conn_lan():
         return db
     except:
         print('no local network connection')
+
 
 def conn_remote():
     try:
@@ -91,7 +99,6 @@ def connection():
     pass
 
 
-
 def sq_all(sql):
     try:
         cur = db.cursor(dictionary=True)
@@ -142,7 +149,14 @@ def groups_list(user_id, sch_yr):
     if all_my_groups:
         for idx in all_my_groups:
             group = all_my_groups[idx]
-            groupsList.append([idx, group['title'], group['subtitle']])
+
+            # group  {'group_type': 'lesson', 'sch_div': 'smp', 'title': 'Design and Technology', 
+            # 'subtitle': '7 A', 'background_colour': '#4b44a3', 'kelas_id': 'KLS001', 
+            # 'pelajaran_id': 'bDT00007', 'group_name': 'Design and Technology', 
+            # 'joined_classes': [], 'instructor_id': 's0103', 'notes': 'notes', 'days': ''}
+
+            print("group ",group)
+            groupsList.append([idx, group['title'], group['subtitle'], group['background_colour']])
     return groupsList
 
 
@@ -159,12 +173,16 @@ def formclasses(idx, guru_id, sch_yr):
     formclassesList = {}
 
     # repack the data
-    for classdata in formclasses:
-        subtitle = classdata[1]
+    for formclass in formclasses:
+        print('formclass', formclass)
+
+        sch_div = formclass['div']
+        subtitle = formclass[1]
 
         # create unique id for this group
         group_name = "Formclass:%s" % subtitle
-        background_colour = groupType_colours[group_type]
+        background_colour = groupType_colours['formclass']
+        print('formclass background_colour', background_colour)
         notes = 'notes'
         daynumbers = ""
 
@@ -180,13 +198,6 @@ def formclasses(idx, guru_id, sch_yr):
                           instructor_id = guru_id,
                           notes = notes,
                           days=daynumbers)
-
-        # data object has items to be displayed + group data
-
-
-        # displayItems = {'title': 'formclass', 'subtitle': subtitle, 'notes': notes,
-        #                'background_colour': background_colour}
-        #data = dict(display_items=displayItems, data=group_data)
 
         # add data object to list
         formclassesList[idx] = group_data
@@ -218,10 +229,13 @@ def lessons(idx, guru_id, sch_yr):
             subtitle = formclass_nickname(sch_div, kelas_id)  # flask
             if is_this_teachers_formclass(sch_div, kelas_id, guru_id):  # flask
                 group_type = 'own'
+                
             else:
                 group_type = 'lesson'
 
         background_colour = groupType_colours[group_type]
+        print("lesson colour", background_colour)
+
         notes = 'notes'
         daynumbers=""
 
@@ -238,16 +252,50 @@ def lessons(idx, guru_id, sch_yr):
                           notes = notes,
                           days=daynumbers)
 
-
-        #displayItems = {'title': title, 'subtitle': subtitle, 'notes': notes,
-        #                'background_colour': background_colour}
-        #data = dict(display_items=displayItems, data=group_data)
-
-        ## data = dict(display_items=[title, subtitle], data=group_data)
         lessonsList[idx] = group_data
         idx += 1
 
     return lessonsList
+
+
+
+def excuric(idx, teacher_id, sch_yr):
+    excurList = {}
+    excur_groups = teachers_excur(teacher_id, sch_yr)  
+
+    for excur in excur_groups:
+        kelas_id = excur['kelas_id']
+        title = excur['group_name']
+
+        daynumbers = excur['days'].split(',')
+        days = daynumbers_to_daynames(daynumbers)
+
+        sch_div= excur['div']
+
+        subtitle = 'excul %s: %s ' % (sch_div, days)
+
+        background_colour = groupType_colours['excur']
+        print(background_colour)
+        notes = 'notes'
+
+        group_data = dict(group_type='excur',
+                          sch_div=sch_div,
+                          title=title,
+                          subtitle=subtitle,
+                          background_colour=background_colour,
+                          kelas_id=kelas_id,
+                          pelajaran_id = '',
+                          group_name=title,
+                          joined_classes=[],
+                          instructor_id=guru_id,
+                          notes=notes,
+                          days=daynumbers)
+
+        excurList[idx] = group_data
+        idx += 1
+
+    return excurList
+
 
 
 def joint_formclass_ids(sch_div, movingclass_id):
@@ -282,66 +330,9 @@ def user(user_id, password):
                 WHERE user_id = '%s' \
                   AND user_pwd = PASSWORD('%s')" % (user_id, password)
     cursor.execute(sql)
-    user = cursor.fetchone()
-    print('user:', user)
-    return user
-
-def excuric(idx, teacher_id, sch_yr):
-    excurList = {}
-    excur_groups = teachers_excur(teacher_id, sch_yr)  # flask
-
-    return excurList
-
-    for group in excur_groups:
-        kelas_id = group['kelas_id']
-        title = group['group_name']
-
-        daynumbers = group['days'].split(',')
-        days = daynumbers_to_daynames(daynumbers)
-
-        subtitle = 'excul %s: %s ' % (sch_div, days)
-
-
-
-        background_colour = groupType_colours[group_type]
-
-        notes = 'notes'
-
-        group_data = dict(group_type='excur',
-                          sch_div=sch_div,
-                          title=title,
-                          subtitle=subtitle,
-                          background_colour=background_colour,
-                          kelas_id=kelas_id,
-                          pelajaran_id = '',
-                          group_name=title,
-                          joined_classes=[],
-                          instructor_id=guru_id,
-                          notes=notes,
-                          days=daynumbers)
-
-        #
-        # group_data = dict(group_type='formclass',
-        #                   sch_div=sch_div,
-        #                   title='formclass',
-        #                   subtitle=subtitle,
-        #                   background_colour=background_colour,
-        #                   kelas_id=classdata[0],
-        #                   pelajaran_id='',
-        #                   group_name=group_name,
-        #                   joined_classes=[],
-        #                   instructor_id=guru_id,
-        #                   notes=notes)
-
-        #displayItems = {'title': title, 'subtitle': subtitle, 'notes': notes,
-        #                 'background_colour': background_colour}
-        #data = dict(display_items=displayItems, data=group_data)
-
-        excurList[idx] = group_data
-        idx += 1
-
-    return excurList
-
+    xuser = cursor.fetchone()
+    print('user:', xuser)
+    return xuser
 
 def all_teachers_formclasses(guru_id, sch_yr):
     mylist = []
